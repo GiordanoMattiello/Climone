@@ -13,24 +13,24 @@ struct Forecast: Codable {
     
     struct Current: Codable {
         let dt: Int
-        let surise: Int
+        let sunrise: Int
         let sunset: Int
         let temp: Double
-        let feel_like: Double
+        let feels_like: Double
         let pressure: Int
         let humidity: Int
         let uvi: Double
         let clouds: Int
-        let visibitity: Int
+        let visibility: Int
         let wind_speed: Double
         let wind_deg: Int
-        let weather: Weather
+        let weather: [Weather]
     }
     let current: Current
     
     struct Daily: Codable {
        let dt: Int
-        let surise: Int
+        let sunrise: Int
         let sunset: Int
         struct Temp: Codable {
             let day: Double
@@ -42,7 +42,7 @@ struct Forecast: Codable {
             let day: Double
         }
         let feels_like: Feels_Like
-        let peressure: Int
+        let pressure: Int
         let humidity: Int
         let wind_speed: Double
         let wind_deg: Int

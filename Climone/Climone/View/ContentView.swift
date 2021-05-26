@@ -8,17 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var forecast:Forecast? = nil
+    
     var body: some View {
         VStack{
-            Text("Campinas")
-            Text("Nublado")
-            Text("5˚")
-            HStack{
-                Text("Max: 7˚")
-                Text("Min: - 4˚")
+            if let forecast = forecast{
+                Text("Campinas")
+                Text(forecast.current.weather[0].description)
+                Text("Temperatura " + String(format: "%.2f",forecast.current.temp - 273))
+                    .padding()
+                HStack{
+                    Text("Max: " + String(format: "%0.f",forecast.daily[0].temp.max.rounded()  - 273) + "˚")
+                    Text("Min: " + String(format: "%0.f",forecast.daily[0].temp.min.rounded() - 273) + "˚")
+                }
+                Spacer()
+            }else{
+                Text("Carregando")
+                
             }
-            Spacer()
+
         
+        }.onAppear{
+            ApiService().getForecast(completion: { (forecast) in
+                self.forecast = forecast
+            })
         }
         
     }
