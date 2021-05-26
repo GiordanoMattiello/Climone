@@ -11,6 +11,8 @@
 		2F2AC1FE265D1CDD00BFBF8F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AC1FD265D1CDD00BFBF8F /* ContentView.swift */; };
 		2F2AC200265D1CDE00BFBF8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F2AC1FF265D1CDE00BFBF8F /* Assets.xcassets */; };
 		2F2AC203265D1CDE00BFBF8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F2AC202265D1CDE00BFBF8F /* Preview Assets.xcassets */; };
+		617315F4265E6CA0000D17C0 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617315F3265E6CA0000D17C0 /* Forecast.swift */; };
+		617315F6265E6CEB000D17C0 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617315F5265E6CEA000D17C0 /* ApiService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		2F2AC1FF265D1CDE00BFBF8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F2AC202265D1CDE00BFBF8F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2F2AC204265D1CDE00BFBF8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		617315F3265E6CA0000D17C0 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
+		617315F5265E6CEA000D17C0 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApiService.swift; path = ../../../../ApiService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +56,9 @@
 		2F2AC1FA265D1CDD00BFBF8F /* Climone */ = {
 			isa = PBXGroup;
 			children = (
-				2F2AC1FB265D1CDD00BFBF8F /* ClimoneApp.swift */,
-				2F2AC1FD265D1CDD00BFBF8F /* ContentView.swift */,
+				617315F2265E6C34000D17C0 /* Controller */,
+				617315F1265E6C2A000D17C0 /* View */,
+				617315EF265E6C11000D17C0 /* Model */,
 				2F2AC1FF265D1CDE00BFBF8F /* Assets.xcassets */,
 				2F2AC204265D1CDE00BFBF8F /* Info.plist */,
 				2F2AC201265D1CDE00BFBF8F /* Preview Content */,
@@ -67,6 +72,31 @@
 				2F2AC202265D1CDE00BFBF8F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		617315EF265E6C11000D17C0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				617315F3265E6CA0000D17C0 /* Forecast.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		617315F1265E6C2A000D17C0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2F2AC1FD265D1CDD00BFBF8F /* ContentView.swift */,
+				2F2AC1FB265D1CDD00BFBF8F /* ClimoneApp.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		617315F2265E6C34000D17C0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				617315F5265E6CEA000D17C0 /* ApiService.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +169,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F2AC1FE265D1CDD00BFBF8F /* ContentView.swift in Sources */,
+				617315F4265E6CA0000D17C0 /* Forecast.swift in Sources */,
+				617315F6265E6CEB000D17C0 /* ApiService.swift in Sources */,
 				2F2AC1FC265D1CDD00BFBF8F /* ClimoneApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
