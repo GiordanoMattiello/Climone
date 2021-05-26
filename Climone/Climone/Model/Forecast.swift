@@ -7,8 +7,62 @@
 
 import Foundation
  
-struct Forecast: Codable{
+struct Forecast: Codable {
+    let lat: Double
+    let lon: Double
+    
+    struct Current: Codable {
+        let dt: Int
+        let surise: Int
+        let sunset: Int
+        let temp: Double
+        let feel_like: Double
+        let pressure: Int
+        let humidity: Int
+        let uvi: Double
+        let clouds: Int
+        let visibitity: Int
+        let wind_speed: Double
+        let wind_deg: Int
+        let weather: Weather
+    }
+    let current: Current
+    
+    struct Daily: Codable {
+       let dt: Int
+        let surise: Int
+        let sunset: Int
+        struct Temp: Codable {
+            let day: Double
+            let min: Double
+            let max: Double
+        }
+        let temp: Temp
+        struct Feels_Like: Codable {
+            let day: Double
+        }
+        let feels_like: Feels_Like
+        let peressure: Int
+        let humidity: Int
+        let wind_speed: Double
+        let wind_deg: Int
+        let weather: [Weather]
+        let clouds: Int
+        let pop: Double
+        let uvi: Double
+        
+    }
+    let daily: [Daily]
     
     
-    
+}
+
+struct Weather: Codable {
+    let id: Int
+    let description: String
+    let icon: String
+    var weatherIconURL: URL {
+        let urlString = "http://openweathermap.org/img/wn/\(icon)@2x.png"
+        return URL(string: urlString)!
+    }
 }
