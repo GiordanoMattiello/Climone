@@ -11,16 +11,22 @@ struct ContentView: View {
     @State var forecast:Forecast? = nil
     
     var body: some View {
+        
         VStack{
             if let forecast = forecast{
                 Text("Campinas")
+                    .fontWeight(.regular)
+                    .font(.system(size: 34))
                 Text(forecast.current.weather[0].description)
-                Text("Temperatura " + String(format: "%.2f",forecast.current.temp - 273))
-                    .padding()
+                Text(String(format: "%0.f",forecast.current.temp - 273) + "˚")
+                    .fontWeight(.thin)
+                    .font(.system(size: 120))
                 HStack{
-                    Text("Max: " + String(format: "%0.f",forecast.daily[0].temp.max.rounded()  - 273) + "˚")
-                    Text("Min: " + String(format: "%0.f",forecast.daily[0].temp.min.rounded() - 273) + "˚")
+                    Text("Máx.: " + String(format: "%0.f",forecast.daily[0].temp.max.rounded()  - 273) + "˚")
+                    Text("Mín.: " + String(format: "%0.f",forecast.daily[0].temp.min.rounded() - 273) + "˚")
                 }
+                
+                
                 Spacer()
             }else{
                 Text("Carregando")
