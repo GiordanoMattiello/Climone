@@ -36,7 +36,9 @@ struct ApiService{
     }
     
     init(){
-        baseUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&exclude=\(exclude)&lang=pt_br&appid=\(key)"
+        baseUrl =
+        "https://api.openweathermap.org/data/2.5/onecall?lat=-22.9064&lon=-47.0616&exclude=alerts=&appid=ef693a2f25ecbaf97d6229b2efe0424f"
+//        baseUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&exclude=\(exclude)&lang=pt_br&appid=\(key)"
     }
 
 

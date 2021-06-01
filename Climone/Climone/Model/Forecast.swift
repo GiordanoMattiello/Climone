@@ -54,6 +54,13 @@ struct Forecast: Codable {
     }
     let daily: [Daily]
     
+    struct Hourly: Codable {
+        let dt: Int
+        let temp: Double
+        let weather: [Weather]
+        let pop: Double
+    }
+    
     
 }
 
