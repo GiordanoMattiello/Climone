@@ -17,6 +17,7 @@
 		2F3E71B62667A484000E41E8 /* Wheater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3E71B52667A484000E41E8 /* Wheater.swift */; };
 		6124C381266663C000B2D259 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6124C380266663C000B2D259 /* CustomScrollView.swift */; };
 		6124C3832666641F00B2D259 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6124C3822666641F00B2D259 /* WeatherView.swift */; };
+		6124C38526683E9D00B2D259 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6124C38426683E9D00B2D259 /* Util.swift */; };
 		617315F4265E6CA0000D17C0 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617315F3265E6CA0000D17C0 /* Forecast.swift */; };
 		617315F9265E7177000D17C0 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617315F8265E7177000D17C0 /* ApiService.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		2F3E71B52667A484000E41E8 /* Wheater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wheater.swift; sourceTree = "<group>"; };
 		6124C380266663C000B2D259 /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		6124C3822666641F00B2D259 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		6124C38426683E9D00B2D259 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		617315F3265E6CA0000D17C0 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		617315F8265E7177000D17C0 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +76,7 @@
 				2F2AC1FF265D1CDE00BFBF8F /* Assets.xcassets */,
 				2F2AC204265D1CDE00BFBF8F /* Info.plist */,
 				2F2AC201265D1CDE00BFBF8F /* Preview Content */,
+				6124C38426683E9D00B2D259 /* Util.swift */,
 			);
 			path = Climone;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6124C38526683E9D00B2D259 /* Util.swift in Sources */,
 				2F3E71B42667A475000E41E8 /* Hourly.swift in Sources */,
 				2F2AC1FE265D1CDD00BFBF8F /* ContentView.swift in Sources */,
 				2F3E71B22667A432000E41E8 /* Daily.swift in Sources */,

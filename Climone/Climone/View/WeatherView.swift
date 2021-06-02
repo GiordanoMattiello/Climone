@@ -15,14 +15,6 @@ struct WeatherView: View {
     @State var titleHeight: CGFloat = 300
     @State var forecast: Forecast? = nil
     
-    func hourFormatter (_ dt: Int) -> String{
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH"
-        return formatter.string(from: Date(timeIntervalSinceReferenceDate: TimeInterval(dt)))
-        
-    }
-    
-    
     var body: some View{
         
         
@@ -48,7 +40,7 @@ struct WeatherView: View {
                             Text("Mín.: " + String(format: "%0.f",reqForecast.daily[0].temp.min.rounded() - 273) + "˚")
                         }
                     }.opacity(( offset.y > 100) ? 0 : 1-Double(offset.y/100) )
-                    .frame(width: 200, height: (offset.y<100) ? 200 : 300-max(offset.y,0) )
+                    .frame(width: 200, height: (offset.y<100) ? 200 : (300-max(offset.y,0)) )
                 }
                 CustomScrollView(offset: $horizontalOffset, showIndicators: false, axis: .horizontal, content:{
                     HStack{
@@ -96,18 +88,19 @@ struct WeatherView: View {
                             
                             HStack{
                                 
-                                Text(String(reqForecast.daily[i].dt))
+                                Text(weekFormatter(reqForecast.daily[i].dt)).frame(alignment: .leading)
                                 
                                 Spacer()
                                 
                                 Image(reqForecast.daily[i].weather[0].icon)
+                                    .frame(width: 10.0, height: 10.0)
                                 
                                 Spacer()
                                 
                                 Text(String(format: "%0.f",reqForecast.daily[i].temp.max.rounded()  - 273))
                                 Text(String(format: "%0.f",reqForecast.daily[i].temp.min.rounded() - 273))
                                 
-                            }.padding(.horizontal,5)
+                            }
                         }
                         
                         Rectangle()
@@ -123,14 +116,14 @@ struct WeatherView: View {
                                 
                                 VStack {
                                     Text("NASCER DO SOL")
-                                    Text(String(reqForecast.current.sunrise))
+                                    Text(hourMinuteFormatter(reqForecast.current.sunrise))
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
                                     Text("PÔR DO SOL")
-                                    Text(String(reqForecast.current.sunset))
+                                    Text(hourMinuteFormatter(reqForecast.current.sunset))
                                 }
                                 Spacer()
                             }
@@ -236,6 +229,7 @@ struct WeatherView: View {
                 self.forecast = forecast
             })
         }.background(Image("bg"))
+
         
     }
     
