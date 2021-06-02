@@ -25,17 +25,19 @@ struct WeatherView: View {
     
     var body: some View{
         
+        
         VStack(alignment: .center){
             
             if let reqForecast = forecast {
-    
-                    
+                
+                
                 VStack{
                     Spacer()
                         .frame(height: (offset.y>100) ? 0 : 100-max(offset.y,0) )
                     Text("Campinas")
                         .fontWeight(.regular)
                         .font(.system(size: 34))
+                    
                     Text(reqForecast.current.weather[0].description)
                     VStack {
                         Text(String(format: "%0.f",reqForecast.current.temp - 273) + "˚")
@@ -55,25 +57,25 @@ struct WeatherView: View {
                             VStack{
                                 
                                 Text("Agora")
-
+                                
                                 Image(reqForecast.hourly[0].weather[0].icon)
-
+                                
                                 Text(String(format: "%0.f", reqForecast.hourly[0].temp.rounded() - 273.0))
-
+                                
                             }.padding()
                             
                             ForEach(1..<reqForecast.hourly.count){ i in
-
+                                
                                 VStack{
-
+                                    
                                     Text(hourFormatter(reqForecast.hourly[i].dt))
-
+                                    
                                     Image(reqForecast.hourly[i].weather[0].icon)
-
+                                    
                                     Text(String(format: "%0.f", reqForecast.hourly[i].temp.rounded() - 273.0))
-
+                                    
                                 }.padding(.horizontal,5)
-
+                                
                             }
                             
                             
@@ -91,23 +93,23 @@ struct WeatherView: View {
                             .frame(height:1)
                         
                         ForEach(1..<reqForecast.daily.count){ i in
-
+                            
                             HStack{
-
+                                
                                 Text(String(reqForecast.daily[i].dt))
                                 
                                 Spacer()
-
+                                
                                 Image(reqForecast.daily[i].weather[0].icon)
                                 
                                 Spacer()
                                 
                                 Text(String(format: "%0.f",reqForecast.daily[i].temp.max.rounded()  - 273))
                                 Text(String(format: "%0.f",reqForecast.daily[i].temp.min.rounded() - 273))
-
+                                
                             }.padding(.horizontal,5)
                         }
-                            
+                        
                         Rectangle()
                             .fill(Color.gray.opacity(0.6))
                             .frame(height:1)
@@ -121,14 +123,14 @@ struct WeatherView: View {
                                 
                                 VStack {
                                     Text("NASCER DO SOL")
-                                    Text("10:00")
+                                    Text(String(reqForecast.current.sunrise))
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
                                     Text("PÔR DO SOL")
-                                    Text("10:00")
+                                    Text(String(reqForecast.current.sunset))
                                 }
                                 Spacer()
                             }
@@ -140,15 +142,15 @@ struct WeatherView: View {
                             HStack {
                                 
                                 VStack {
-                                    Text("NASCER DO SOL")
-                                    Text("10:00")
+                                    Text("CHANCE DE CHUVA")
+                                    Text(String(reqForecast.daily[0].pop))
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
-                                    Text("PÔR DO SOL")
-                                    Text("10:00")
+                                    Text("UMIDADE")
+                                    Text(String(reqForecast.current.humidity))
                                 }
                                 Spacer()
                             }
@@ -160,15 +162,15 @@ struct WeatherView: View {
                             HStack {
                                 
                                 VStack {
-                                    Text("NASCER DO SOL")
-                                    Text("10:00")
+                                    Text("VENTO")
+                                    Text("")
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
-                                    Text("PÔR DO SOL")
-                                    Text("10:00")
+                                    Text("SENSAÇÃO TÉRMICA")
+                                    Text(String(format: "%0.f", reqForecast.current.feels_like.rounded() - 273.0))
                                 }
                                 Spacer()
                             }
@@ -180,15 +182,15 @@ struct WeatherView: View {
                             HStack {
                                 
                                 VStack {
-                                    Text("NASCER DO SOL")
-                                    Text("10:00")
+                                    Text("PRECIPITAÇÃO")
+                                    Text(String(reqForecast.daily[0].rain ?? 0))
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
-                                    Text("PÔR DO SOL")
-                                    Text("10:00")
+                                    Text("PRESSÃO")
+                                    Text(String(reqForecast.current.pressure))
                                 }
                                 Spacer()
                             }
@@ -200,15 +202,15 @@ struct WeatherView: View {
                             HStack {
                                 
                                 VStack {
-                                    Text("NASCER DO SOL")
-                                    Text("10:00")
+                                    Text("VISIBILIDADE")
+                                    Text(String(reqForecast.current.visibility))
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
-                                    Text("PÔR DO SOL")
-                                    Text("10:00")
+                                    Text("ÍNDICE UV")
+                                    Text(String(reqForecast.current.uvi))
                                 }
                                 Spacer()
                             }
@@ -233,7 +235,7 @@ struct WeatherView: View {
             ApiService().getForecast(completion: { (forecast) in
                 self.forecast = forecast
             })
-        }
+        }.background(Image("bg"))
         
     }
     

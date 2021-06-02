@@ -29,5 +29,5 @@ struct Daily: Codable {
     let clouds: Int
     let pop: Double
     let uvi: Double
-    
+    let rain: Double?
 }
