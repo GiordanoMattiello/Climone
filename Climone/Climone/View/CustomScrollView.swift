@@ -42,7 +42,7 @@ struct CustomScrollView<Content: View>: View{
                                 startOffset = CGPoint(x: rect.minX,y: rect.minY)
                             }
                         }
-                       
+                        
                         DispatchQueue.main.async{
                             if(self.movedLastInteraction){
                                 self.offset = CGPoint(x: startOffset.x - (rect.minX) ,y: startOffset.y - rect.minY )
