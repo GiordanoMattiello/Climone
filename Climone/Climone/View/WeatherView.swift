@@ -6,7 +6,14 @@
 //
 import SwiftUI
 
+struct SubtitleSpecifiqueInformation: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .opacity(0.5)
+            .font(.system(size: 10))
 
+    }
+}
 
 struct WeatherView: View {
     // Offset Value...
@@ -18,7 +25,7 @@ struct WeatherView: View {
     var body: some View{
         
         
-        VStack(alignment: .center){
+        VStack(alignment: .center, spacing: 0){
             
             if let reqForecast = forecast {
                 
@@ -41,72 +48,117 @@ struct WeatherView: View {
                         }
                     }.opacity(( offset.y > 100) ? 0 : 1-Double(offset.y/100) )
                     .frame(width: 200, height: (offset.y<100) ? 200 : (300-max(offset.y,0)) )
-                }
-                CustomScrollView(offset: $horizontalOffset, showIndicators: false, axis: .horizontal, content:{
-                    HStack{
                         
-                        HStack(alignment: .center, spacing: 25) {
-                            VStack{
+                    
+                }
+                
+                Rectangle()
+                    .fill(Color.gray.opacity(0.6))
+                    .frame(height:1)
+                    
+                
+                
+                CustomScrollView(offset: $horizontalOffset, showIndicators: false, axis: .horizontal, content:{
+                  
+                        
+                        HStack(alignment: .center, spacing: 5) {
+                            VStack(alignment: .center){
                                 
                                 Text("Agora")
-                                
+                                    .fontWeight(.bold)
+                                                                    
                                 Image(reqForecast.hourly[0].weather[0].icon)
+                                    .resizable()
+                                    .frame(width: 35.0, height: 35.0, alignment: .center)
                                 
-                                Text(String(format: "%0.f", reqForecast.hourly[0].temp.rounded() - 273.0))
+                                Text(String(format: "%0.f˚", reqForecast.hourly[0].temp.rounded() - 273.0))
+                                    .fontWeight(.bold)
+                                    .font(.system(size: 20))
                                 
-                            }.padding()
+                            }.padding(.horizontal,5)
+                            
+                            
+                           
+                            
+
+                            
                             
                             ForEach(1..<reqForecast.hourly.count){ i in
                                 
-                                VStack{
+                                VStack(alignment: .center){
                                     
                                     Text(hourFormatter(reqForecast.hourly[i].dt))
                                     
                                     Image(reqForecast.hourly[i].weather[0].icon)
+                                        .resizable()
+                                        .frame(width: 35.0, height: 35.0, alignment: .center)
                                     
-                                    Text(String(format: "%0.f", reqForecast.hourly[i].temp.rounded() - 273.0))
+                                    Text(String(format: "%0.f˚", reqForecast.hourly[i].temp.rounded() - 273.0))
+                                        .font(.system(size: 20))
                                     
                                 }.padding(.horizontal,5)
                                 
                             }
                             
                             
-                        }
+                        }.padding(.horizontal, 10)
                         
-                    }
+                    
                 })
-                .frame(width:400,height:100)
+                .frame(width:400,height:150)
+               
+                
+                Rectangle()
+                    .fill(Color.gray.opacity(0.6))
+                    .frame(width: 400,height:1)
+                   
+                
                 CustomScrollView(offset: $offset, showIndicators: true, axis: .vertical, content: {
                     
-                    
-                    VStack(spacing: 15){
-                        Rectangle()
-                            .fill(Color.gray.opacity(0.6))
-                            .frame(height:1)
+                    VStack(spacing: 0){
                         
-                        ForEach(1..<reqForecast.daily.count){ i in
-                            
-                            HStack{
+                        VStack {
+                            ForEach(1..<reqForecast.daily.count){ i in
                                 
-                                Text(weekFormatter(reqForecast.daily[i].dt)).frame(alignment: .leading)
-                                
-                                Spacer()
-                                
-                                Image(reqForecast.daily[i].weather[0].icon)
-                                    .frame(width: 10.0, height: 10.0)
-                                
-                                Spacer()
-                                
-                                Text(String(format: "%0.f",reqForecast.daily[i].temp.max.rounded()  - 273))
-                                Text(String(format: "%0.f",reqForecast.daily[i].temp.min.rounded() - 273))
-                                
+                                HStack{
+                                    
+                                    Text(weekFormatter(reqForecast.daily[i].dt))
+                                        .font(.body)
+                                        .frame(width: 130.0, alignment: .leading)
+                                        .font(.system(size: 20))
+                                        
+                                    
+                                    Spacer()
+                                    
+                                    Image(reqForecast.daily[i].weather[0].icon)
+                                        .resizable()
+                                        .frame(width: 35.0, height: 35.0, alignment: .center)
+                                        
+                                    
+                                    Spacer()
+                                    
+                                    HStack{
+                                        Text(String(format: "%0.f",reqForecast.daily[i].temp.max.rounded()  - 273))
+                                            .padding(.trailing, 5.0)
+                                        
+                                        Text(String(format: "%0.f",reqForecast.daily[i].temp.min.rounded() - 273))
+                                            .opacity(0.5)
+                                    }
+                                    
+                                    .frame(width: 130.0, alignment: .trailing)
+                                    
+                                    
+                                }
                             }
-                        }
+                        }.padding(.horizontal)
                         
                         Rectangle()
                             .fill(Color.gray.opacity(0.6))
                             .frame(height:1)
-                        Text("Hoje:Ensolarado no momento. A máxima será de 24˚.Céu Limpo esta noite, com mínima de 13˚ ")
+                        Text("Hoje: \(reqForecast.current.weather[0].description.capitalized). A máxima será de \(String(format: "%0.f",reqForecast.daily[0].temp.max.rounded()  - 273))˚ com mínima de \(String(format: "%0.f",reqForecast.daily[0].temp.min.rounded()  - 273))˚.")
+                            .frame(height: 50, alignment: .leading)
+                            .padding(3)
+                            
                         Rectangle()
                             .fill(Color.gray.opacity(0.6))
                             .frame(height:1)
@@ -116,6 +168,7 @@ struct WeatherView: View {
                                 
                                 VStack {
                                     Text("NASCER DO SOL")
+                                        .modifier(SubtitleSpecifiqueInformation())
                                     Text(hourMinuteFormatter(reqForecast.current.sunrise))
                                     
                                 }
@@ -216,9 +269,9 @@ struct WeatherView: View {
                         
                         Text("Tempo em Campinas. Abrir Mapas")
                         
-                    }.padding(.top,10)
+                    }
                 })
-                .padding()
+                
                 
             }
             else {
@@ -229,7 +282,7 @@ struct WeatherView: View {
                 self.forecast = forecast
             })
         }.background(Image("bg"))
-
+        .foregroundColor(Color.white)
         
     }
     
