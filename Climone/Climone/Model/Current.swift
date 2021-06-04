@@ -19,7 +19,7 @@ struct Current: Codable {
     let clouds: Int
     let visibility: Int
     let wind_speed: Double
-    let wind_deg: Int
+    let wind_deg: Double
     let weather: [Weather]
 }
 

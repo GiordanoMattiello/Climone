@@ -50,9 +50,13 @@ struct WeatherView: View {
                     Text(reqForecast.current.weather[0].description.capitalized)
                     VStack {
                         
-                            Text(String(format: "%0.f",reqForecast.current.temp - 273) + "˚")
-                                .fontWeight(.thin)
-                                .font(.custom("Helvetica Neue", size: 130))
+                        Text(String(format: "  %0.f",reqForecast.current.temp - 273) + "˚")
+                            .fontWeight(.thin)
+                            .font(.system(size: 120))
+                            
+                            
+                                
+                              
                                 
                         
                         HStack{
@@ -62,7 +66,7 @@ struct WeatherView: View {
                             
                         }
                     }.opacity(( offset.y > 100) ? 0 : 1-Double(offset.y/100) )
-                    .frame(width: 200, height: (offset.y<100) ? 200 : (300-max(offset.y,0)) )
+                    .frame(width: 250, height: (offset.y<100) ? 200 : (300-max(offset.y,0)) )
                         
                     
                 }
@@ -237,8 +241,16 @@ struct WeatherView: View {
                                 VStack {
                                     Text("VENTO")
                                         .modifier(SubtitleSpecifiqueInformation())
-                                    Text("")
-                                        .modifier(specifiqueInformation())
+                                        .frame(alignment: .leading)
+                                    HStack {
+                                        Text(String(windDirectionFromDegrees(degrees: reqForecast.current.wind_deg)))
+                                            .font(.system(size: 22))
+                                            .padding(.top, 4)
+                                            
+                                        Text(String(format: "%0.f Km/h",(reqForecast.current.wind_speed * 3.6).rounded()))
+                                            
+                                    }.modifier(specifiqueInformation())
+                                    
                                     
                                 }
                                 Spacer()
@@ -293,7 +305,7 @@ struct WeatherView: View {
                                 VStack {
                                     Text("VISIBILIDADE")
                                         .modifier(SubtitleSpecifiqueInformation())
-                                    Text(String(reqForecast.current.visibility / 1000 ) )
+                                    Text(String(reqForecast.current.visibility / 1000 ) + " Km" )
                                         .modifier(specifiqueInformation())
                                     
                                 }
@@ -302,7 +314,7 @@ struct WeatherView: View {
                                 VStack{
                                     Text("ÍNDICE UV")
                                         .modifier(SubtitleSpecifiqueInformation())
-                                    Text(String(reqForecast.current.uvi))
+                                    Text(String(format: "%0.f",(reqForecast.current.uvi).rounded()))
                                         .modifier(specifiqueInformation())
                                 }
                                 Spacer()
@@ -315,9 +327,15 @@ struct WeatherView: View {
                             .frame(height:0.5)
                             
                         
-                        Text("Tempo em Campinas. Abrir Mapas")
-                            .padding(10)
-                            
+                        
+                        Button(action: {openMap()})
+                        {
+                            HStack {
+                                Text("Tempo em Campinas.")
+                                Text("Abrir no Mapas")
+                                    .underline()
+                            }
+                        }.padding(10)
                             
                         
                     }
