@@ -9,10 +9,11 @@ import Foundation
 
 struct ApiService{
     let key = "ef693a2f25ecbaf97d6229b2efe0424f"
-    let lat = "-22.9064"
-    let lon = "-47.0616"
+    let lat = "-22.817126"
+    let lon = "-47.069753"
     let exclude = "alerts"
     let baseUrl:String
+   
     
     func getForecast(completion: @escaping (Forecast)-> ()) {
         guard let url = URL(string: baseUrl) else { return }

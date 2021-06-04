@@ -10,10 +10,20 @@ struct SubtitleSpecifiqueInformation: ViewModifier {
     func body(content: Content) -> some View {
         content
             .opacity(0.5)
-            .font(.system(size: 10))
+            .font(.system(size: 14))
+            .frame(width:150,alignment: .leading)
+            
 
     }
 }
+struct specifiqueInformation: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 28))
+            .frame(width:150,alignment: .leading)
+    }
+}
+
 
 struct WeatherView: View {
     // Offset Value...
@@ -37,14 +47,19 @@ struct WeatherView: View {
                         .fontWeight(.regular)
                         .font(.system(size: 34))
                     
-                    Text(reqForecast.current.weather[0].description)
+                    Text(reqForecast.current.weather[0].description.capitalized)
                     VStack {
-                        Text(String(format: "%0.f",reqForecast.current.temp - 273) + "˚")
-                            .fontWeight(.thin)
-                            .font(.system(size: 120))
+                        
+                            Text(String(format: "%0.f",reqForecast.current.temp - 273) + "˚")
+                                .fontWeight(.thin)
+                                .font(.custom("Helvetica Neue", size: 130))
+                                
+                        
                         HStack{
+                            
                             Text("Máx.: " + String(format: "%0.f",reqForecast.daily[0].temp.max.rounded()  - 273) + "˚")
                             Text("Mín.: " + String(format: "%0.f",reqForecast.daily[0].temp.min.rounded() - 273) + "˚")
+                            
                         }
                     }.opacity(( offset.y > 100) ? 0 : 1-Double(offset.y/100) )
                     .frame(width: 200, height: (offset.y<100) ? 200 : (300-max(offset.y,0)) )
@@ -53,15 +68,15 @@ struct WeatherView: View {
                 }
                 
                 Rectangle()
-                    .fill(Color.gray.opacity(0.6))
-                    .frame(height:1)
+                    .fill(Color.white.opacity(0.6))
+                    .frame(height:0.5)
                     
                 
                 
                 CustomScrollView(offset: $horizontalOffset, showIndicators: false, axis: .horizontal, content:{
                   
                         
-                        HStack(alignment: .center, spacing: 5) {
+                        HStack(alignment: .center, spacing: 0) {
                             VStack(alignment: .center){
                                 
                                 Text("Agora")
@@ -77,12 +92,7 @@ struct WeatherView: View {
                                 
                             }.padding(.horizontal,5)
                             
-                            
-                           
-                            
 
-                            
-                            
                             ForEach(1..<reqForecast.hourly.count){ i in
                                 
                                 VStack(alignment: .center){
@@ -105,27 +115,28 @@ struct WeatherView: View {
                         
                     
                 })
-                .frame(width:400,height:150)
+                .frame(width:400,height:130)
+                
                
                 
                 Rectangle()
-                    .fill(Color.gray.opacity(0.6))
-                    .frame(width: 400,height:1)
+                    .fill(Color.white.opacity(0.6))
+                    .frame(height:0.5)
                    
                 
                 CustomScrollView(offset: $offset, showIndicators: true, axis: .vertical, content: {
                     
-                    VStack(spacing: 0){
+                    VStack(alignment: .leading,spacing: 0){
                         
-                        VStack {
+                        VStack(spacing: 0) {
                             ForEach(1..<reqForecast.daily.count){ i in
                                 
                                 HStack{
                                     
                                     Text(weekFormatter(reqForecast.daily[i].dt))
-                                        .font(.body)
+                                        .font(.system(size:20))
                                         .frame(width: 130.0, alignment: .leading)
-                                        .font(.system(size: 20))
+                                        
                                         
                                     
                                     Spacer()
@@ -140,9 +151,11 @@ struct WeatherView: View {
                                     HStack{
                                         Text(String(format: "%0.f",reqForecast.daily[i].temp.max.rounded()  - 273))
                                             .padding(.trailing, 5.0)
+                                            .font(.system(size:20))
                                         
                                         Text(String(format: "%0.f",reqForecast.daily[i].temp.min.rounded() - 273))
                                             .opacity(0.5)
+                                            .font(.system(size:20))
                                     }
                                     
                                     .frame(width: 130.0, alignment: .trailing)
@@ -153,121 +166,159 @@ struct WeatherView: View {
                         }.padding(.horizontal)
                         
                         Rectangle()
-                            .fill(Color.gray.opacity(0.6))
-                            .frame(height:1)
+                            .fill(Color.white.opacity(0.6))
+                            .frame(height:0.5)
+                        
+                        
                         Text("Hoje: \(reqForecast.current.weather[0].description.capitalized). A máxima será de \(String(format: "%0.f",reqForecast.daily[0].temp.max.rounded()  - 273))˚ com mínima de \(String(format: "%0.f",reqForecast.daily[0].temp.min.rounded()  - 273))˚.")
                             .frame(height: 50, alignment: .leading)
-                            .padding(3)
+                            .padding(10)
                             
                         Rectangle()
-                            .fill(Color.gray.opacity(0.6))
-                            .frame(height:1)
-                        VStack {
+                            .fill(Color.white.opacity(0.6))
+                            .frame(height:0.5)
+                            .padding(.bottom, 5)
+                        VStack(spacing: 5) {
                             
-                            HStack {
-                                
+                            HStack{
                                 VStack {
                                     Text("NASCER DO SOL")
                                         .modifier(SubtitleSpecifiqueInformation())
                                     Text(hourMinuteFormatter(reqForecast.current.sunrise))
-                                    
+                                        .modifier(specifiqueInformation())
+                                }
+                                
+                                Spacer()
+                                VStack{
+                                    Text("PÔR DO SOL")
+                                        .modifier(SubtitleSpecifiqueInformation())
+                                    Text(hourMinuteFormatter(reqForecast.current.sunset))
+                                        .modifier(specifiqueInformation())
+                                        
                                 }
                                 Spacer()
                                 
-                                VStack{
-                                    Text("PÔR DO SOL")
-                                    Text(hourMinuteFormatter(reqForecast.current.sunset))
-                                }
-                                Spacer()
-                            }
+                            }.padding(.horizontal,10)
+                            
+            
                             
                             Rectangle()
-                                .fill(Color.gray.opacity(0.6))
-                                .frame(height:1)
+                                .fill(Color.white.opacity(0.6))
+                                .frame(height:0.5)
+                                .padding(.horizontal,10)
                             
                             HStack {
                                 
                                 VStack {
                                     Text("CHANCE DE CHUVA")
-                                    Text(String(reqForecast.daily[0].pop))
+                                        .modifier(SubtitleSpecifiqueInformation())
+                                    Text(String(format: "%0.f",(reqForecast.daily[0].pop*100.0).rounded()) + "%")
+                                        .modifier(specifiqueInformation())
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
                                     Text("UMIDADE")
-                                    Text(String(reqForecast.current.humidity))
+                                        .modifier(SubtitleSpecifiqueInformation())
+                                    Text(String(reqForecast.current.humidity) + "%")
+                                        .modifier(specifiqueInformation())
                                 }
                                 Spacer()
-                            }
+                            }.padding(.horizontal,10)
                             
                             Rectangle()
-                                .fill(Color.gray.opacity(0.6))
-                                .frame(height:1)
+                                .fill(Color.white.opacity(0.6))
+                                .frame(height:0.5)
+                                .padding(.horizontal,10)
                             
                             HStack {
                                 
                                 VStack {
                                     Text("VENTO")
+                                        .modifier(SubtitleSpecifiqueInformation())
                                     Text("")
+                                        .modifier(specifiqueInformation())
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
                                     Text("SENSAÇÃO TÉRMICA")
-                                    Text(String(format: "%0.f", reqForecast.current.feels_like.rounded() - 273.0))
+                                        .modifier(SubtitleSpecifiqueInformation())
+                                    Text(String(format: "%0.f", reqForecast.current.feels_like.rounded() - 273.0) + "˚")
+                                        .modifier(specifiqueInformation())
                                 }
                                 Spacer()
-                            }
+                            }.padding(.horizontal,10)
                             
                             Rectangle()
-                                .fill(Color.gray.opacity(0.6))
-                                .frame(height:1)
+                                .fill(Color.white.opacity(0.6))
+                                .frame(height:0.5)
+                                .padding(.horizontal,10)
                             
                             HStack {
                                 
                                 VStack {
                                     Text("PRECIPITAÇÃO")
-                                    Text(String(reqForecast.daily[0].rain ?? 0))
+                                        .modifier(SubtitleSpecifiqueInformation())
+                                    if let prep = reqForecast.daily[0].rain {
+                                        Text(String(format: "%0.f cm", (prep / 10.0).rounded()  ) )
+                                            .modifier(specifiqueInformation())
+                                    }else{
+                                        Text("0 cm")
+                                            .modifier(specifiqueInformation())
+                                    }
+                                    
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
                                     Text("PRESSÃO")
-                                    Text(String(reqForecast.current.pressure))
+                                        .modifier(SubtitleSpecifiqueInformation())
+                                    Text(String(reqForecast.current.pressure) + " hPa")
+                                        .modifier(specifiqueInformation())
                                 }
                                 Spacer()
-                            }
+                            }.padding(.horizontal,10)
                             
                             Rectangle()
-                                .fill(Color.gray.opacity(0.6))
-                                .frame(height:1)
+                                .fill(Color.white.opacity(0.6))
+                                .frame(height:0.5)
+                                .padding(.horizontal,10)
                             
                             HStack {
                                 
                                 VStack {
                                     Text("VISIBILIDADE")
-                                    Text(String(reqForecast.current.visibility))
+                                        .modifier(SubtitleSpecifiqueInformation())
+                                    Text(String(reqForecast.current.visibility / 1000 ) )
+                                        .modifier(specifiqueInformation())
                                     
                                 }
                                 Spacer()
                                 
                                 VStack{
                                     Text("ÍNDICE UV")
+                                        .modifier(SubtitleSpecifiqueInformation())
                                     Text(String(reqForecast.current.uvi))
+                                        .modifier(specifiqueInformation())
                                 }
                                 Spacer()
-                            }
+                            }.padding(.horizontal,10)
                             
                         }
                         
                         Rectangle()
-                            .fill(Color.gray.opacity(0.6))
-                            .frame(height:1)
+                            .fill(Color.white.opacity(0.6))
+                            .frame(height:0.5)
+                            
                         
                         Text("Tempo em Campinas. Abrir Mapas")
+                            .padding(10)
+                            
+                            
                         
                     }
                 })
@@ -287,3 +338,10 @@ struct WeatherView: View {
     }
     
 }
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
