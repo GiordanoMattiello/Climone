@@ -32,6 +32,7 @@ struct WeatherView: View {
     @State var titleHeight: CGFloat = 300
     @State var forecast: Forecast? = nil
     
+    
     var body: some View{
         
         
@@ -42,12 +43,14 @@ struct WeatherView: View {
                 
                 VStack{
                     Spacer()
-                        .frame(height: (offset.y>100) ? 0 : 100-max(offset.y,0) )
+                        .frame(height: 50-max(min(offset.y,50),0))
+                        
                     Text("Campinas")
                         .fontWeight(.regular)
                         .font(.system(size: 34))
-                    
+ 
                     Text(reqForecast.current.weather[0].description.capitalized)
+                        
                     VStack {
                         
                             Text(String(format: "%0.f",reqForecast.current.temp - 273) + "˚")
@@ -62,9 +65,12 @@ struct WeatherView: View {
                             
                         }
                     }.opacity(( offset.y > 100) ? 0 : 1-Double(offset.y/100) )
-                    .frame(width: 200, height: (offset.y<100) ? 200 : (300-max(offset.y,0)) )
-                        
+                    .frame(width: 200, height: 200-max(min( offset.y ,128),0) )
                     
+                    Spacer()
+                        .frame(height: 100-max(min(offset.y,100),0))
+                        
+
                 }
                 
                 Rectangle()
@@ -115,10 +121,7 @@ struct WeatherView: View {
                         
                     
                 })
-                .frame(width:400,height:130)
-                
-               
-                
+
                 Rectangle()
                     .fill(Color.white.opacity(0.6))
                     .frame(height:0.5)

@@ -23,46 +23,28 @@ struct CustomScrollView<Content: View>: View{
         self.axis = axis
     }
     
-    @State var startOffset: CGPoint = .zero
-    @State var movedLastInteraction: Bool = false
-
     var body: some View{
         
         ScrollView(axis, showsIndicators: showIndicators, content:{
             content
-                .overlay(
-                    GeometryReader{proxy -> Color in
-                        
-                        let rect = proxy.frame(in: .global)
-                        
-                        
-                        
-                        if startOffset == .zero{
-                            DispatchQueue.main.async{
-                                startOffset = CGPoint(x: rect.minX,y: rect.minY)
-                            }
-                        }
-                        
-                        DispatchQueue.main.async{
-                            if(self.movedLastInteraction){
-                                self.offset = CGPoint(x: startOffset.x - (rect.minX) ,y: startOffset.y - rect.minY )
-                                self.movedLastInteraction=false
-                            }else{
-                                self.movedLastInteraction = true
-                            }
-
-                        }
-                        
-
-                        
-                        return Color.clear
-                    }
-
-                )
-        })
-  
-            
+                .background(GeometryReader {
+                            Color.clear.preference(key: ViewOffsetKey.self,
+                                value: -$0.frame(in: .named("scroll")).origin.y)
+                }).onPreferenceChange(ViewOffsetKey.self) { print("offset >> \($0)")
+                    offset.y = $0
+                }
+            }).coordinateSpace(name: "scroll")
     }
 
     
 }
+
+struct ViewOffsetKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue = CGFloat.zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value += nextValue()
+    }
+}
+
+
